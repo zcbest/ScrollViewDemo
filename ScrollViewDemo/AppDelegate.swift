@@ -16,7 +16,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
-        self.window?.rootViewController = LeadingViewController()
+        if !NSUserDefaults.standardUserDefaults().boolForKey("firstLaunch"){
+            NSUserDefaults.standardUserDefaults().setBool(true, forKey: "firstLaunch")
+            NSUserDefaults.standardUserDefaults().synchronize()
+            self.window?.rootViewController = LeadingViewController()
+        }else{
+            self.window?.rootViewController = MainViewController()
+        }
         self.window?.backgroundColor = UIColor.whiteColor()
         self.window?.makeKeyAndVisible()
         return true
